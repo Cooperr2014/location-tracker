@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Location Tracker</title>
+</head>
+<body>
+  <h2>در حال بررسی موقعیت مکانی...</h2>
+  <script>
+    navigator.geolocation.getCurrentPosition(function(position) {
+      fetch("https://api.ipify.org?format=json")
+        .then(res => res.json())
+        .then(ipData => {
+          const data = {
+            lat: position.coords.latitude,
+            lon: position.coords.longitude,
+            acc: position.coords.accuracy,
+            ip: ipData.ip,
+            ua: navigator.userAgent
+          };
+          console.log("📍 Your data:", data);
+          alert("لوکیشن ثبت شد!");
+        });
+    });
+  </script>
+</body>
+</html>
